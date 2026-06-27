@@ -66,6 +66,7 @@ body{
 .info-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,215,0,0.6);margin-bottom:4px;}
 .info-value{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#fff;}
 .info-sub{font-size:13px;color:rgba(255,255,255,0.55);margin-top:2px;}
+.info-time{font-size:13px;color:#FFD700;margin-top:4px;letter-spacing:1px;}
 .location-btn{
   display:inline-block;margin-top:20px;padding:12px 28px;
   border:1.5px solid rgba(255,215,0,0.5);border-radius:50px;
@@ -130,7 +131,7 @@ body{
 
 <div class="card" id="card">
   <div class="school-label">École privée</div>
-  <div class="school-name">Lemanya</div>
+  <div class="school-name">Lemania</div>
   <div style="font-size:14px;color:rgba(255,215,0,0.6);letter-spacing:3px;margin-top:-6px;margin-bottom:16px;">BORDJ EL KIFFAN</div>
   <div class="divider"></div>
   <div class="invite-text">a l'honneur de vous convier à sa</div>
@@ -142,6 +143,7 @@ body{
       <div class="info-label">Date</div>
       <div class="info-value">29 Juin 2026</div>
       <div class="info-sub">Lundi</div>
+      <div class="info-time">⏰ À partir de 9h</div>
     </div>
     <div class="info-box">
       <div class="info-icon">📍</div>
@@ -216,26 +218,19 @@ makeStars(starsBg, 80);
 function openInvitation() {
   gift.classList.add('hidden');
   window.scrollTo({top: 0, behavior: 'smooth'});
-  // Force reflow pour relancer la transition
   card.classList.remove('show');
-  card.offsetHeight; // déclenche le reflow
-  setTimeout(() => {
-    card.classList.add('show');
-  }, 50);
+  card.offsetHeight;
+  setTimeout(() => card.classList.add('show'), 50);
   launchAnimation();
 }
 
 gift.addEventListener('click', openInvitation);
 
 refreshBtn.addEventListener('click', () => {
-  // 1. Cacher la carte
   card.classList.remove('show');
   window.scrollTo({top: 0, behavior: 'smooth'});
-
-  // 2. Après la transition de fermeture, montrer le gift overlay
   setTimeout(() => {
     gift.classList.remove('hidden');
-    // 3. Au clic sur le gift, rouvrir normalement
   }, 700);
 });
 </script>
