@@ -169,18 +169,13 @@ body{
   </div>
   <div class="divider" style="margin-top:28px;"></div>
   <div class="footer">Au plaisir de vous y voir !</div>
-  <div>
-    <button class="refresh-btn" id="refreshBtn">
-      <span class="refresh-icon">🔄</span> Revoir l'animation
-    </button>
-  </div>
+  
 </div>
 
 <script>
 const gift = document.getElementById('gift');
 const card = document.getElementById('card');
 const starsBg = document.getElementById('starsBg');
-const refreshBtn = document.getElementById('refreshBtn');
 const colors = ['#FFD700','#FF6B9D','#7EB8F7','#A8FF78','#FFB347','#FF6B6B','#C9A9FF'];
 const balloonEmojis = ['🎈','🎊','🎉','🎈','🎊'];
 
@@ -226,13 +221,7 @@ function openInvitation() {
 
 gift.addEventListener('click', openInvitation);
 
-refreshBtn.addEventListener('click', () => {
-  card.classList.remove('show');
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  setTimeout(() => {
-    gift.classList.remove('hidden');
-  }, 700);
-});
+
 </script>
 </body>
 </html>
