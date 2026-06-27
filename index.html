@@ -29,10 +29,9 @@ body{
   display:flex;flex-direction:column;
   justify-content:center;align-items:center;
   z-index:9999;cursor:pointer;
-  transition:opacity 0.8s ease;
   overflow:hidden;
 }
-.gift-overlay.hide{opacity:0;pointer-events:none;}
+.gift-overlay.hidden{display:none;}
 .gift-icon{font-size:100px;animation:bounce 1.4s ease-in-out infinite;}
 .gift-caption{margin-top:24px;color:#FFD700;font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:2px;text-align:center;}
 @keyframes bounce{
@@ -49,9 +48,10 @@ body{
   max-width:680px;width:100%;
   text-align:center;color:#fff;
   box-shadow:0 0 60px rgba(255,215,0,0.15),inset 0 0 40px rgba(255,255,255,0.03);
-  opacity:0;transform:scale(0.93);
-  transition:all 1s ease;
   margin:auto;
+  opacity:0;
+  transform:scale(0.93);
+  transition:opacity 1s ease, transform 1s ease;
 }
 .card.show{opacity:1;transform:scale(1);}
 .school-label{font-size:13px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,215,0,0.7);margin-bottom:6px;}
@@ -75,8 +75,6 @@ body{
 .location-btn:hover{background:rgba(255,215,0,0.15);}
 .message{margin-top:28px;font-family:'Cormorant Garamond',serif;font-size:20px;color:rgba(255,255,255,0.75);line-height:1.7;font-style:italic;}
 .footer{margin-top:28px;font-family:'Great Vibes',cursive;font-size:34px;color:#FFD700;opacity:0.8;}
-
-/* ===== REMARQUE ===== */
 .notice{
   margin-top:28px;
   background:rgba(255,100,100,0.08);
@@ -93,14 +91,10 @@ body{
 }
 .notice-text{
   font-family:'Cormorant Garamond',serif;
-  font-size:17px;
-  color:rgba(255,255,255,0.75);
-  line-height:1.7;
-  font-style:italic;
+  font-size:17px;color:rgba(255,255,255,0.75);
+  line-height:1.7;font-style:italic;
 }
 .notice-text strong{color:#FFD700;font-style:normal;}
-
-/* ===== REFRESH ===== */
 .refresh-btn{
   display:inline-flex;align-items:center;gap:8px;
   margin-top:28px;padding:10px 24px;
@@ -112,12 +106,10 @@ body{
 .refresh-btn:hover{background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.4);}
 .refresh-icon{font-size:16px;display:inline-block;transition:transform 0.4s ease;}
 .refresh-btn:hover .refresh-icon{transform:rotate(180deg);}
-
 .confetti-piece{position:fixed;width:9px;height:9px;top:-10px;z-index:9998;animation:fall linear forwards;border-radius:2px;}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 .balloon{position:fixed;font-size:36px;animation:riseUp linear forwards;z-index:9997;}
 @keyframes riseUp{from{opacity:1;}to{transform:translateY(-110vh) rotate(30deg);opacity:0;}}
-
 @media(max-width:520px){
   .school-name{font-size:48px;}
   .event-title{font-size:32px;}
@@ -165,8 +157,6 @@ body{
     Votre présence sera pour nous un honneur.<br>
     Venez célébrer avec nous les succès et les beaux souvenirs de cette année.
   </div>
-
-  <!-- REMARQUE -->
   <div class="notice">
     <div class="notice-title">⚠️ Remarque importante</div>
     <div class="notice-text">
@@ -175,10 +165,8 @@ body{
       Afin de garantir le bon déroulement de la cérémonie, nous vous remercions de respecter cette disposition.
     </div>
   </div>
-
   <div class="divider" style="margin-top:28px;"></div>
   <div class="footer">Au plaisir de vous y voir !</div>
-
   <div>
     <button class="refresh-btn" id="refreshBtn">
       <span class="refresh-icon">🔄</span> Revoir l'animation
@@ -225,28 +213,30 @@ function launchAnimation() {
 
 makeStars(starsBg, 80);
 
-gift.addEventListener('click', () => {
-  gift.classList.add('hide');
-  setTimeout(() => gift.style.display = 'none', 800);
-  card.classList.add('show');
+function openInvitation() {
+  gift.classList.add('hidden');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  // Force reflow pour relancer la transition
+  card.classList.remove('show');
+  card.offsetHeight; // déclenche le reflow
+  setTimeout(() => {
+    card.classList.add('show');
+  }, 50);
   launchAnimation();
-});
+}
+
+gift.addEventListener('click', openInvitation);
 
 refreshBtn.addEventListener('click', () => {
+  // 1. Cacher la carte
   card.classList.remove('show');
-  card.style.opacity = '0';
-  card.style.transform = 'scale(0.93)';
-  gift.style.display = 'flex';
-  gift.style.opacity = '0';
-  gift.classList.remove('hide');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  // 2. Après la transition de fermeture, montrer le gift overlay
   setTimeout(() => {
-    gift.style.transition = 'opacity 0.5s ease';
-    gift.style.opacity = '1';
-    window.scrollTo({top:0, behavior:'smooth'});
-  }, 100);
-  setTimeout(() => {
-    card.style.transition = '';
-  }, 50);
+    gift.classList.remove('hidden');
+    // 3. Au clic sur le gift, rouvrir normalement
+  }, 700);
 });
 </script>
 </body>
