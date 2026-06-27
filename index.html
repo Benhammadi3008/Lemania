@@ -148,18 +148,13 @@ body{
   <div class="divider" style="margin-top:24px;"></div>
   <div class="footer">Au plaisir de vous y voir !</div>
 
-  <div>
-    <button class="refresh-btn" id="refreshBtn">
-      <span class="refresh-icon">🔄</span> Revoir l'animation
-    </button>
-  </div>
+
 </div>
 
 <script>
 const gift = document.getElementById('gift');
 const card = document.getElementById('card');
 const starsBg = document.getElementById('starsBg');
-const refreshBtn = document.getElementById('refreshBtn');
 const colors = ['#FFD700','#FF6B9D','#7EB8F7','#A8FF78','#FFB347','#FF6B6B','#C9A9FF'];
 const balloonEmojis = ['🎈','🎊','🎉','🎈','🎊'];
 
@@ -201,26 +196,7 @@ gift.addEventListener('click', () => {
   launchAnimation();
 });
 
-refreshBtn.addEventListener('click', () => {
-  card.classList.remove('show');
-  card.style.opacity = '0';
-  card.style.transform = 'scale(0.93)';
 
-  gift.style.display = 'flex';
-  gift.style.opacity = '0';
-  gift.classList.remove('hide');
-
-  setTimeout(() => {
-    gift.style.transition = 'opacity 0.5s ease';
-    gift.style.opacity = '1';
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  }, 100);
-
-  setTimeout(() => {
-    card.style.transition = '';
-    card.classList.add('show');
-  }, 50);
-});
 </script>
 </body>
 </html>
